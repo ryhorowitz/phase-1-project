@@ -6,6 +6,7 @@ DOMContentLoaded
 Click Event Submit Form
 -A form will allow user to find your Hebrew Birthday
 
+3. event listeners ideas 'mouse up' show more info
 https://www.hebcal.com/home/219/hebrew-date-converter-rest-api
 
 https://www.hebcal.com/home/195/jewish-calendar-rest-api
@@ -16,3 +17,6 @@ meeting with Dustin
 talk about meeting the criteria of three dom events
 i have 1. DOMContentLoaded and 2. click 
 
+commit often
+
+make backrougnd and basic css
