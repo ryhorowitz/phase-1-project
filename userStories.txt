@@ -20,3 +20,5 @@ i have 1. DOMContentLoaded and 2. click
 commit often
 
 make backrougnd and basic css
+
+Blog ideas JS Date object
