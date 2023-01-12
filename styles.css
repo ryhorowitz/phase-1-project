@@ -1,9 +1,29 @@
+html {
+  margin: auto;
+}
+
 body {
-  margin: 0 10%;
-  width: 800px;
+  margin: 0;
+  height: auto;
+  width: auto;
   text-align: center;
 }
 
+h1#title {
+  background-color: #105689;
+  color:aliceblue;
+  margin-top: auto;
+  padding: 15px;
+}
 div#current-date {
   margin: 10px 0 50px;
+}
+
+div#form-container {
+  text-align: left;
+  padding: 25px
+}
+
+div#form-container form {
+  padding: 15px;
 }

@@ -5,15 +5,16 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <h1>Dummy Title</h1>
+    <h1 id="title">Dummy Title</h1>
     <div id="current-date">todays date</div>
     <div id="form-container">
+      <h3>Birthday Calculator</h3>
       <form action="" method="get">
         <label for="birthday" >Birthday</label>
         <input type="text" placeholder="mm-dd-yyyy"> <br>
-        <label for="time-of-birth">Time of day</label>
-        <input type="radio" name="time-of-birth" id="time-of-birth" value="morning">morning
-        <input type="radio" name="time-of-birth" id="time-of-birth" value="evening">evening
+        <label for="time-of-birth">Time of day</label> <br>
+        <input type="radio" name="time-of-birth" id="time-of-birth" value="morning">Morning <br>
+        <input type="radio" name="time-of-birth" id="time-of-birth" value="evening">Afternoon or evening before midnight
       </form>
     </div>
     <script src="/index.js"></script>
