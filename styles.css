@@ -3,3 +3,7 @@ body {
   width: 800px;
   text-align: center;
 }
+
+div#current-date {
+  margin: 10px 0 50px;
+}
