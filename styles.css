@@ -15,8 +15,18 @@ h1#title {
   margin-top: auto;
   padding: 15px;
 }
-div#current-date {
+div#date-container {
+  display: inline;
   margin: 10px 0 50px;
+}
+div#current-civil-date {
+  display: inline;
+  /* margin-top: 10px; */
+  /* padding-top: 10px; */
+  padding-right: 10px;
+}
+div#current-hdate {
+  display: inline;
 }
 
 div#form-container {
