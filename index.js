@@ -43,15 +43,16 @@ form.addEventListener('submit', (e) => {
  //with the selected time of day and date
  //query heb cal
 //  generate query String
-  // `${URI}?`
-  const qDate = formatQueryDate(birthday.value)
-  console.log('qDate',typeof qDate)
+const qDate = formatQueryDate(birthday.value)
+const qString = `${URI}?cfg=json&date=${qDate}&g2h=1&strict=1&gs=on`
+  console.log('qDate', qDate)
+  fetch(qString)
+    .then(res => res.json())
+    .then(data => console.log(data))
 })
 
 function formatQueryDate(date) { //takes in 11/22/1988 returns 1988-11-22
   const dateArr = date.split('/')
-  console.log(dateArr)
   const result = `${dateArr[2]}-${dateArr[0]}-${dateArr[1]}`
-  // YYYY-MM-DD
   return result
 }
