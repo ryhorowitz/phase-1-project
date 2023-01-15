@@ -31,5 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 form.addEventListener('submit', (e) => {
   e.preventDefault()
   const birthday = document.querySelector('input#birthday')
-  console.log(birthday.value)
+  const timesOfDay = document.querySelectorAll('input[name="time-of-day"]')
+  console.log(timesOfDay)
+  //find from nodeList timesOfDay which radio button is selected.
 })
