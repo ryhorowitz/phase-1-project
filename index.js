@@ -4,14 +4,21 @@ const currentDate = document.querySelector('#current-date')
 const cdate = document.querySelector('#current-civil-date')
 const hdate = document.querySelector('#current-hdate')
 const form = document.querySelector('#birthday-calc')
-
-const todaysDateQueryStr = new Date().toISOString().slice(0, 10)
+const URI = `https://www.hebcal.com/converter`
+const todaysDateStr = new Date().toISOString().slice(0, 10)
 const todaysDateDisplayStr = new Date().toString().slice(0, 15)
 
-const dateURI = `https://www.hebcal.com/converter?cfg=json&date=${todaysDateQueryStr}&g2h=1&strict=1`
+const todaysDateQuery = `${URI}?cfg=json&date=${todaysDateStr}&g2h=1&strict=1`
+//finds which radio input is selected and returns its value
+function radioChecked(nodeList) {
+  const nodes = Array.from(nodeList)
+  const found = nodes.find(input => input.checked === true)
+  return found.value
+}
+
 //api function to get hebrew date
 function getTodaysHebrewDate() {
-  fetch(dateURI)
+  fetch(todaysDateQuery)
     .then(res => res.json())
     .then(data => {
       // console.log(data)
@@ -27,22 +34,24 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 //on Form submit get birthday info
-// console.log('form is, ', form)
 form.addEventListener('submit', (e) => {
   e.preventDefault()
   const birthday = document.querySelector('input#birthday')
+  console.log('Birthday, ', birthday.value)
   const timesOfDay = document.querySelectorAll('input[name="time-of-day"]')
-  console.log(timesOfDay)
-  //find from nodeList timesOfDay which radio button is selected.
   const timeOfDay = radioChecked(timesOfDay)
-  console.log(timeOfDay)
+ //with the selected time of day and date
+ //query heb cal
+//  generate query String
+  // `${URI}?`
+  const qDate = formatQueryDate(birthday.value)
+  console.log('qDate',typeof qDate)
 })
 
-function radioChecked(nodeList) {
-  const nodes = Array.from(nodeList)
-  const found = nodes.find(input => input.checked === true)
-  console.log('found is', found.value)
-  // find which input has a checked value of true
-  //return the inputs value
-  return found.value
+function formatQueryDate(date) { //takes in 11/22/1988 returns 1988-11-22
+  const dateArr = date.split('/')
+  console.log(dateArr)
+  const result = `${dateArr[2]}-${dateArr[0]}-${dateArr[1]}`
+  // YYYY-MM-DD
+  return result
 }
