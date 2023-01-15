@@ -34,4 +34,15 @@ form.addEventListener('submit', (e) => {
   const timesOfDay = document.querySelectorAll('input[name="time-of-day"]')
   console.log(timesOfDay)
   //find from nodeList timesOfDay which radio button is selected.
+  const timeOfDay = radioChecked(timesOfDay)
+  console.log(timeOfDay)
 })
+
+function radioChecked(nodeList) {
+  const nodes = Array.from(nodeList)
+  const found = nodes.find(input => input.checked === true)
+  console.log('found is', found.value)
+  // find which input has a checked value of true
+  //return the inputs value
+  return found.value
+}
