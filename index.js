@@ -5,9 +5,10 @@ const body = document.querySelector('body')
 const currentDate = document.querySelector('#current-date')
 const cdate = document.querySelector('#current-civil-date')
 const hdate = document.querySelector('#current-hdate')
-const form = document.querySelector('#birthday-calc')
+const form = document.querySelector('#hebrew-birthday-calc')
 const birthdayDiv = document.querySelector('#birthday-container')
 const birthdayText = document.querySelector('#birthday-text')
+const birthdayContainer = document.querySelector('#birthday-container')
 const URI = `https://www.hebcal.com/converter`
 const todaysDateStr = new Date().toISOString().slice(0, 10)
 const todaysDateDisplayStr = new Date().toString().slice(0, 15)
@@ -49,12 +50,16 @@ function getHebrewBirthday(str) {
 
 function addBirthdayToDOM(data) {
   const { hm, hd, hy, hebrew } = { ...data }
-
-
   birthdayText.innerText = `Your Hebrew Birthday is ${hm} ${hd}, ${hy} ${hebrew}`
   console.log(birthdayText)
   birthdayDiv.appendChild(birthdayText)
   body.append(birthdayDiv)
+}
+
+function formatQueryDate(date) { //takes in 11/22/1988 returns 1988-11-22
+  const dateArr = date.split('/')
+  const result = `${dateArr[2]}-${dateArr[0]}-${dateArr[1]}`
+  return result
 }
 //on Form submit get birthday info
 form.addEventListener('submit', (e) => {
@@ -69,10 +74,7 @@ form.addEventListener('submit', (e) => {
   getHebrewBirthday(qString)
 })
 
-function formatQueryDate(date) { //takes in 11/22/1988 returns 1988-11-22
-  const dateArr = date.split('/')
-  const result = `${dateArr[2]}-${dateArr[0]}-${dateArr[1]}`
-  return result
-}
-
 //mouse over hebrew birthday div and find out the birthdays for the next five years
+birthdayContainer.addEventListener('mouseover', () => {
+  console.log('mouse over event')
+})
