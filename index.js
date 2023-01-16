@@ -7,12 +7,12 @@ const birthdayDiv = document.querySelector('#birthday-container')
 const birthdayText = document.querySelector('#birthday-text')
 const roshChodeshMouseOver =document.querySelector('#find-rosh-chodesh')
 const roshChodeshinfo = document.querySelector('#rosh-chodesh-info')
-// const birthdayContainer = document.querySelector('#birthday-container')
 const URI = `https://www.hebcal.com/converter`
 const todaysDateStr = new Date().toISOString().slice(0, 10)
 const todaysDateDisplayStr = new Date().toString().slice(0, 15)
 const todaysDateQuery = `${URI}?cfg=json&date=${todaysDateStr}&g2h=1&strict=1`
 let next30daysQuery
+
 //finds which radio input is selected and returns its value
 function radioChecked(nodeList) {
   const nodes = Array.from(nodeList)
@@ -25,7 +25,6 @@ function getTodaysHebrewDate() {
   fetch(todaysDateQuery)
     .then(res => res.json())
     .then(data => {
-      // console.log(data)
       const { hm, hd, hy, hebrew } = { ...data }
       cdate.innerText = `${todaysDateDisplayStr}`
       hdate.innerText = `${hm} ${hd}, ${hy} ${hebrew}`
@@ -53,7 +52,6 @@ function getHebrewBirthday(str) {
 function addBirthdayToDOM(data) {
   const { hm, hd, hy, hebrew } = { ...data }
   birthdayText.innerText = `Your Hebrew Birthday is ${hm} ${hd}, ${hy} ${hebrew}`
-  // console.log(birthdayText)
   birthdayDiv.appendChild(birthdayText)
   body.append(birthdayDiv)
 }
@@ -77,32 +75,28 @@ function findNextRoshChodesh(arr) {
     }
   }
 }
-//on Form submit get birthday info
+
 form.addEventListener('submit', (e) => {
   e.preventDefault()
+
   const birthday = document.querySelector('input#birthday')
   const timesOfDay = document.querySelectorAll('input[name="time-of-day"]')
   const timeOfDay = radioChecked(timesOfDay)
   const gs = timeOfDay === 'evening' ? 'on' : 'off'
   const qDate = formatQueryDate(birthday.value)
-  // console.log('qDate', qDate)
-  const qString = `${URI}?cfg=json&date=${qDate}&g2h=1&strict=1&gs=${gs}`//defaults to after sunset
+  const qString = `${URI}?cfg=json&date=${qDate}&g2h=1&strict=1&gs=${gs}`//defaults to after 
+  
   getHebrewBirthday(qString)
 })
 
-//mouse over hebrew birthday div and find out the when the next hebrew month stars
 roshChodeshMouseOver.addEventListener('mouseover', () => {
-  console.log('mouse over event')
   fetch(next30daysQuery)
     .then(res => res.json())
     .then(data => {
-      const arrayOfNext30Days = Object.entries(data.hdates) //creates an iterable array by date
-      // console.log(arrayOfDates)
+      const arrayOfNext30Days = Object.entries(data.hdates) 
       return findNextRoshChodesh(arrayOfNext30Days)
     })
     .then( roshChodesh => {
-      console.log(roshChodesh)
-      // add HTML that add rosh Chodesh info to the DOM
       let [year, mon, day] = [...roshChodesh.date.split('-')]
       console.log(year, mon, day)
       let date = new Date(year, (mon - 1), day).toString()
@@ -113,5 +107,6 @@ roshChodeshMouseOver.addEventListener('mouseover', () => {
     .catch(err => console.error(err.message))
 })
 
-// 2D arr 
-//iterate through array and check if arr[i][1].events[] has Rosh Chodesh in it 
+roshChodeshMouseOver.addEventListener('mouseout', () => {
+  roshChodeshinfo.innerText = ''
+})
