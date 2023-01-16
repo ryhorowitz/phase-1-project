@@ -13,6 +13,7 @@ const URI = `https://www.hebcal.com/converter`
 const todaysDateStr = new Date().toISOString().slice(0, 10)
 const todaysDateDisplayStr = new Date().toString().slice(0, 15)
 let thisYear
+const next5Years = []
 
 const todaysDateQuery = `${URI}?cfg=json&date=${todaysDateStr}&g2h=1&strict=1`
 //finds which radio input is selected and returns its value
@@ -22,6 +23,16 @@ function radioChecked(nodeList) {
   return found.value
 }
 
+function makeNext5YearsArray(arr) {
+  let i = 5
+  let year = (thisYear + 1)  
+  while (i > 0) {
+    arr.push(year)
+    year++
+    i--
+  }
+  console.log(arr)
+}
 //api function to get hebrew date
 function getTodaysHebrewDate() {
   fetch(todaysDateQuery)
@@ -31,7 +42,11 @@ function getTodaysHebrewDate() {
       const { hm, hd, hy, hebrew } = { ...data }
       cdate.innerText = `${todaysDateDisplayStr}`
       hdate.innerText = `${hm} ${hd}, ${hy} ${hebrew}`
-      thisYear = hy
+      return hy
+    })
+    .then(year => {
+      thisYear = year
+      makeNext5YearsArray(next5Years)
     })
 
     .catch(err => console.error(err.message))
