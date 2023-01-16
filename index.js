@@ -12,6 +12,7 @@ const birthdayContainer = document.querySelector('#birthday-container')
 const URI = `https://www.hebcal.com/converter`
 const todaysDateStr = new Date().toISOString().slice(0, 10)
 const todaysDateDisplayStr = new Date().toString().slice(0, 15)
+let thisYear
 
 const todaysDateQuery = `${URI}?cfg=json&date=${todaysDateStr}&g2h=1&strict=1`
 //finds which radio input is selected and returns its value
@@ -30,8 +31,10 @@ function getTodaysHebrewDate() {
       const { hm, hd, hy, hebrew } = { ...data }
       cdate.innerText = `${todaysDateDisplayStr}`
       hdate.innerText = `${hm} ${hd}, ${hy} ${hebrew}`
+      thisYear = hy
     })
-  // append data to div
+
+    .catch(err => console.error(err.message))
 }
 //on DOM load hit api and display today's civil and hebrew date
 document.addEventListener('DOMContentLoaded', () => {
@@ -39,13 +42,12 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 function getHebrewBirthday(str) {
   fetch(str)
-  .then(res => res.json())
-  .then(data => {
-    console.log(data)
-    addBirthdayToDOM(data)
-    // with fetch data now display person's heebrew birthday on DOM
-    // add Birthday to DOM
-  })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      addBirthdayToDOM(data)
+    })
+    .catch(err => console.error(err.message))
 }
 
 function addBirthdayToDOM(data) {
@@ -77,4 +79,9 @@ form.addEventListener('submit', (e) => {
 //mouse over hebrew birthday div and find out the birthdays for the next five years
 birthdayContainer.addEventListener('mouseover', () => {
   console.log('mouse over event')
+
 })
+
+//find out what the hebrew birthday will be the next 5 years
+// using the month and day make a batch request to of the next five hebrew years
+//kislev 13 5784, 5785, 5786, 5787, 5788
