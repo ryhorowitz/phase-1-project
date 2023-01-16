@@ -5,6 +5,8 @@ const hdate = document.querySelector('#current-hdate')
 const form = document.querySelector('#hebrew-birthday-calc')
 const birthdayDiv = document.querySelector('#birthday-container')
 const birthdayText = document.querySelector('#birthday-text')
+const roshChodeshMouseOver =document.querySelector('#find-rosh-chodesh')
+const roshChodeshinfo = document.querySelector('#rosh-chodesh-info')
 // const birthdayContainer = document.querySelector('#birthday-container')
 const URI = `https://www.hebcal.com/converter`
 const todaysDateStr = new Date().toISOString().slice(0, 10)
@@ -63,14 +65,14 @@ function formatQueryDate(date) { //takes in 11/22/1988 returns 1988-11-22
 }
 
 function findNextRoshChodesh(arr) {
-
+  let roshChodesh
   for (let i = 0; i < arr.length; i++) {
     let date = arr[i][0]
     let events = arr[i][1].events
 
     for (let j = 0; j < events.length; j++) {
       if (events[j].includes('Rosh')) {
-        return { [date]: arr[i][1].hm }
+        return roshChodesh = { date, month: arr[i][1].hm }
       }
     }
   }
@@ -89,7 +91,7 @@ form.addEventListener('submit', (e) => {
 })
 
 //mouse over hebrew birthday div and find out the when the next hebrew month stars
-hdate.addEventListener('mouseover', () => {
+roshChodeshMouseOver.addEventListener('mouseover', () => {
   console.log('mouse over event')
   fetch(next30daysQuery)
     .then(res => res.json())
@@ -101,6 +103,12 @@ hdate.addEventListener('mouseover', () => {
     .then( roshChodesh => {
       console.log(roshChodesh)
       // add HTML that add rosh Chodesh info to the DOM
+      let [year, mon, day] = [...roshChodesh.date.split('-')]
+      console.log(year, mon, day)
+      let date = new Date(year, (mon - 1), day).toString()
+      date = date.slice(0,16)
+      console.log(date)
+      roshChodeshinfo.innerText = `Rosh Chodesh ${roshChodesh.month} is on ${date}`
     })
     .catch(err => console.error(err.message))
 })
