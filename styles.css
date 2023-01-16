@@ -13,11 +13,13 @@ h1#title {
   background-color: #105689;
   color:aliceblue;
   margin-top: auto;
-  padding: 15px;
+  padding: 20px;
 }
 div#date-container {
   display: inline;
   margin: 10px 0 50px;
+  font-size: large;
+  font-weight: 800;
 }
 div#current-civil-date {
   display: inline;
@@ -32,7 +34,7 @@ div#current-hdate {
 div#forms-container {
   /* display: inline; */
   text-align: center;
-  margin: 50px 75px;
+  margin: 10px 75px;
   padding: 25px;
 
 }
@@ -46,4 +48,9 @@ div.form-container {
 
 div#birthday-container {
   font-size: 2em;
+}
+
+h2#rosh-chodesh-info {
+  font-weight: 900;
+  font-stretch: expanded;
 }
