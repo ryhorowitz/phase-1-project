@@ -27,9 +27,9 @@ function getTodaysHebrewDate() {
       const { hm, hd, hy, hebrew } = { ...data }
       cdate.innerText = `${todaysDateDisplayStr}`
       hdate.innerText = `${hm} ${hd}, ${hy} ${hebrew}`
-      return {hm, hd, hy}
+      return { hm, hd, hy }
     })
-    .then(({hm, hd, hy}) => {
+    .then(({ hm, hd, hy }) => {
       console.log(hd, hm, hy)
       next30daysQuery = `${URI}?cfg=json&hy=${hy}&hm=${hm}&hd=${hd}&h2g=1&ndays=30&strict=1`
     })
@@ -61,6 +61,20 @@ function formatQueryDate(date) { //takes in 11/22/1988 returns 1988-11-22
   const result = `${dateArr[2]}-${dateArr[0]}-${dateArr[1]}`
   return result
 }
+
+function findNextRoshChodesh(arr) {
+
+  for (let i = 0; i < arr.length; i++) {
+    let date = arr[i][0]
+    let events = arr[i][1].events
+
+    for (let j = 0; j < events.length; j++) {
+      if (events[j].includes('Rosh')) {
+        return { [date]: arr[i][1].hm }
+      }
+    }
+  }
+}
 //on Form submit get birthday info
 form.addEventListener('submit', (e) => {
   e.preventDefault()
@@ -78,12 +92,18 @@ form.addEventListener('submit', (e) => {
 hdate.addEventListener('mouseover', () => {
   console.log('mouse over event')
   fetch(next30daysQuery)
-  .then(res => res.json())
-  .then(data => {
-    const arrayOfDates = Object.entries(data.hdates) //creates an iterable array by date
-    console.log(arrayOfDates)
-    
-  })
-  .catch(err => console.error(err.message))
+    .then(res => res.json())
+    .then(data => {
+      const arrayOfNext30Days = Object.entries(data.hdates) //creates an iterable array by date
+      // console.log(arrayOfDates)
+      return findNextRoshChodesh(arrayOfNext30Days)
+    })
+    .then( roshChodesh => {
+      console.log(roshChodesh)
+      // add HTML that add rosh Chodesh info to the DOM
+    })
+    .catch(err => console.error(err.message))
 })
 
+// 2D arr 
+//iterate through array and check if arr[i][1].events[] has Rosh Chodesh in it 
