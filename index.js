@@ -1,6 +1,3 @@
-//query select
-// <div id="current-date">todays date</div>
-
 const body = document.querySelector('body')
 const currentDate = document.querySelector('#current-date')
 const cdate = document.querySelector('#current-civil-date')
@@ -12,9 +9,9 @@ const birthdayContainer = document.querySelector('#birthday-container')
 const URI = `https://www.hebcal.com/converter`
 const todaysDateStr = new Date().toISOString().slice(0, 10)
 const todaysDateDisplayStr = new Date().toString().slice(0, 15)
-let thisYear
 const next5Years = []
-
+let thisYear
+let birthdayMonthDay
 const todaysDateQuery = `${URI}?cfg=json&date=${todaysDateStr}&g2h=1&strict=1`
 //finds which radio input is selected and returns its value
 function radioChecked(nodeList) {
@@ -25,13 +22,12 @@ function radioChecked(nodeList) {
 
 function makeNext5YearsArray(arr) {
   let i = 5
-  let year = (thisYear + 1)  
+  let year = (thisYear + 1)
   while (i > 0) {
     arr.push(year)
     year++
     i--
   }
-  console.log(arr)
 }
 //api function to get hebrew date
 function getTodaysHebrewDate() {
@@ -59,7 +55,6 @@ function getHebrewBirthday(str) {
   fetch(str)
     .then(res => res.json())
     .then(data => {
-      console.log(data)
       addBirthdayToDOM(data)
     })
     .catch(err => console.error(err.message))
@@ -67,12 +62,16 @@ function getHebrewBirthday(str) {
 
 function addBirthdayToDOM(data) {
   const { hm, hd, hy, hebrew } = { ...data }
+  assignBirthdayVar(hm, hd)
   birthdayText.innerText = `Your Hebrew Birthday is ${hm} ${hd}, ${hy} ${hebrew}`
-  console.log(birthdayText)
+  // console.log(birthdayText)
   birthdayDiv.appendChild(birthdayText)
   body.append(birthdayDiv)
 }
 
+function assignBirthdayVar(hm, hd) {
+  birthdayMonthDay = { hm, hd }
+}
 function formatQueryDate(date) { //takes in 11/22/1988 returns 1988-11-22
   const dateArr = date.split('/')
   const result = `${dateArr[2]}-${dateArr[0]}-${dateArr[1]}`
@@ -86,7 +85,7 @@ form.addEventListener('submit', (e) => {
   const timeOfDay = radioChecked(timesOfDay)
   const gs = timeOfDay === 'evening' ? 'on' : 'off'
   const qDate = formatQueryDate(birthday.value)
-  console.log('qDate', qDate)
+  // console.log('qDate', qDate)
   const qString = `${URI}?cfg=json&date=${qDate}&g2h=1&strict=1&gs=${gs}`//defaults to after sunset
   getHebrewBirthday(qString)
 })
@@ -97,6 +96,3 @@ birthdayContainer.addEventListener('mouseover', () => {
 
 })
 
-//find out what the hebrew birthday will be the next 5 years
-// using the month and day make a batch request to of the next five hebrew years
-//kislev 13 5784, 5785, 5786, 5787, 5788
