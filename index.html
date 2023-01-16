@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>HebCal Project</title>
-    <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-    <h1 id="title">Dummy Title</h1>
-    <div id="date-container">Today is:  
-      <div id="current-civil-date"></div>
-      <div id="current-hdate"></div>
-    </div>
-    <div id="form-container">
-      <h3>Birthday Calculator</h3>
-      <form action="" id="birthday-calc">
-        <label for="birthday" >Birthday</label>
+
+<head>
+  <title>HebCal Project</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <h1 id="title">Dummy Title</h1>
+  <div id="date-container">Today is:
+    <div id="current-civil-date"></div>
+    <div id="current-hdate"></div>
+  </div>
+  <div id="forms-container">
+    <div class="form-container">
+      <h3>Hebrew Birthday Calculator</h3>
+      <form action="" id="hebrew-birthday-calc">
+        <label for="birthday">Birthday</label>
         <input id="birthday" type="text" placeholder="mm/dd/yyyy" required> <br>
         <label for="time-of-day">Time of day</label> <br>
         <input type="radio" name="time-of-day" id="morning" value="morning">Morning <br>
@@ -21,11 +24,24 @@
         <input type="submit" value="Find Out">
       </form>
     </div>
-    <div id="birthday-container">
-      <div id='birthday-text'>
-
-      </div>
+    <div class="form-container">
+      <h3>Civil Birthday Calculator</h3>
+      <form action="" id="civil-birthday-calc">
+        <label for="birthday">Birthday</label>
+        <input id="birthday" type="text" placeholder="mm/dd/yyyy" required> <br>
+        <label for="time-of-day">Time of day</label> <br>
+        <input type="radio" name="time-of-day" id="morning" value="morning">Morning <br>
+        <input type="radio" name="time-of-day" id="evening" value="evening">Afternoon or evening before midnight <br>
+        <input type="submit" value="Find Out">
+      </form>
     </div>
-    <script src="./index.js"></script>
-  </body>
+  </div>
+  <div id="birthday-container">
+    <div id='birthday-text'>
+
+    </div>
+  </div>
+  <script src="./index.js"></script>
+</body>
+
 </html>
