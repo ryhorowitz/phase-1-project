@@ -7,6 +7,8 @@ const birthdayDiv = document.querySelector('#birthday-container')
 const birthdayText = document.querySelector('#birthday-text')
 const roshChodeshMouseOver =document.querySelector('#find-rosh-chodesh')
 const roshChodeshinfo = document.querySelector('#rosh-chodesh-info')
+const birthdayInput = document.querySelector('input#birthday')
+const timesOfDay = document.querySelectorAll('input[name="time-of-day"]')
 const URI = `https://www.hebcal.com/converter`
 const todaysDateStr = new Date().toISOString().slice(0, 10)
 const todaysDateDisplayStr = new Date().toString().slice(0, 15)
@@ -79,11 +81,9 @@ function findNextRoshChodesh(arr) {
 form.addEventListener('submit', (e) => {
   e.preventDefault()
 
-  const birthday = document.querySelector('input#birthday')
-  const timesOfDay = document.querySelectorAll('input[name="time-of-day"]')
   const timeOfDay = radioChecked(timesOfDay)
   const gs = timeOfDay === 'evening' ? 'on' : 'off'
-  const qDate = formatQueryDate(birthday.value)
+  const qDate = formatQueryDate(birthdayInput.value)
   const qString = `${URI}?cfg=json&date=${qDate}&g2h=1&strict=1&gs=${gs}`//defaults to after 
   
   getHebrewBirthday(qString)
@@ -98,10 +98,10 @@ roshChodeshMouseOver.addEventListener('mouseover', () => {
     })
     .then( roshChodesh => {
       let [year, mon, day] = [...roshChodesh.date.split('-')]
-      console.log(year, mon, day)
+      // console.log(year, mon, day)
       let date = new Date(year, (mon - 1), day).toString()
       date = date.slice(0,16)
-      console.log(date)
+      // console.log(date)
       roshChodeshinfo.innerText = `Rosh Chodesh ${roshChodesh.month} is on ${date}`
     })
     .catch(err => console.error(err.message))
